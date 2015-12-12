@@ -5,9 +5,27 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
+  <sprites name="sprites">
+    <sprite>sprites\s_player</sprite>
+    <sprite>sprites\s_platform</sprite>
+    <sprite>sprites\s_sword</sprite>
+    <sprite>sprites\s_dust</sprite>
+    <sprite>sprites\s_vine</sprite>
+    <sprite>sprites\s_blBeetle</sprite>
+  </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <fonts name="fonts">
+    <font>fonts\font</font>
+  </fonts>
+  <objects name="objects">
+    <object>objects\player</object>
+    <object>objects\platform</object>
+    <object>objects\sword</object>
+    <object>objects\dust</object>
+    <object>objects\vine</object>
+    <object>objects\blBeetle</object>
+  </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>
   </rooms>
