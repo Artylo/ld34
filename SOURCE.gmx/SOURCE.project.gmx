@@ -14,8 +14,11 @@
     <sprite>sprites\s_vine</sprite>
     <sprite>sprites\s_blBeetle</sprite>
     <sprite>sprites\s_goup</sprite>
+    <sprite>sprites\s_title</sprite>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\background</background>
+  </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\generate_level.gml</script>
@@ -32,6 +35,7 @@
     <object>objects\vine</object>
     <object>objects\blBeetle</object>
     <object>objects\goup</object>
+    <object>objects\title</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>

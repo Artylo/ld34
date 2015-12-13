@@ -61,6 +61,9 @@ isClimb = false;
             <kind>1</kind>
             <string>///Animation
 
+if(sprite_index = s_player)
+{
+
 if(input_left)image_xscale = abs(image_xscale);
 if(input_right)image_xscale = abs(image_xscale)*-1;
 
@@ -80,6 +83,8 @@ if(isSwing and isJump)
     image_angle = sword.image_angle;
 }
 else image_angle = 0;
+
+}
 
 </string>
           </argument>
@@ -176,7 +181,7 @@ if(sprite_index = s_player)
 //Normal
 if(input_left)
 {
-    if(bbox_left &gt; 0)
+    if(bbox_left-hspeed &gt; 10) and (!position_meeting(bbox_left-mspeed,y,platform))
     {
         if(position_meeting(x-sword.swordDist,y,sword))
         {
@@ -199,11 +204,12 @@ if(input_left)
             isCharge = false;
         }
     }
+    else hspeed = 0;
 }
 
 if(input_right)
 {
-    if(bbox_right &lt; room_width)
+    if(bbox_right+hspeed &lt; room_width-10) and (!position_meeting(bbox_right+mspeed,y,platform))
     {
         if(position_meeting(x+sword.swordDist,y,sword))
         {
@@ -226,6 +232,7 @@ if(input_right)
             isCharge = false;
         }
     }
+    else hspeed = 0;
 }
 
 
@@ -337,7 +344,7 @@ if(director.level != director.mlevel)
 {
     if(x &gt; vine.bbox_left and x &lt; vine.bbox_right)
     {
-        if(input_jump)
+        if(input_jump) and position_meeting(x,bbox_bottom+1,platform)
         {
             generate_level();
             sprite_index = s_player_climb;
@@ -345,6 +352,8 @@ if(director.level != director.mlevel)
             image_speed = 0.1;
             //director.upLeft += view_hview + 16*(director.mlevel-1);
             director.upLeft += view_hview;
+            with sword visible = false;
+            depth = 1;
         }
         
     }
@@ -352,39 +361,15 @@ if(director.level != director.mlevel)
 if(sprite_index = s_player_climb)
 {
     vspeed = -1;
+    background_vspeed[0] = -0.5;
     if(vine.bbox_bottom &gt; bbox_bottom)
     {
         sprite_index = s_player;
+        with sword visible = true;
+        depth = 0;
+        background_vspeed[0] = 0;
     }
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="64">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>//Debug
-draw_set_font(font);
-draw_set_colour(c_white);
-draw_text(16,16,"level: " + string(director.level));
-draw_text(16,32,"mlevel: " + string(director.mlevel));
-draw_text(16,48,"vine: " + string(vine.size));
 </string>
           </argument>
         </arguments>

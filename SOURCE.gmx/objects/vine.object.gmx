@@ -3,7 +3,7 @@
   <spriteName>s_vine</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>1</depth>
+  <depth>2</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -68,6 +68,9 @@ if(isMoving)
     }
     else isMoving = false;
 }
+
+//size = round(size);
+//isLeft = round(isLeft);
 </string>
           </argument>
         </arguments>
@@ -95,6 +98,7 @@ for(var i = 0; i &lt; size; i ++)
 {
     draw_sprite(s_vine,1,x,y+i*64+64);
 }
+
 draw_self();
 </string>
           </argument>

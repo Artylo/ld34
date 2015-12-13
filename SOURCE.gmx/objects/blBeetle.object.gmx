@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>///Variables
+friction = 0.1;
 image_speed = 0.1;
 gravity = 0.5;
 mspeed = 1;
@@ -100,9 +101,28 @@ if(hp &lt;= 0)
             motion_add(irandom(360),1);
         }
     }
+    with(vine)
+    {
+        if(director.mlevel == 1)
+        {
+            size += 3/global.enemiesLeft;
+            isLeft += 3*64/global.enemiesLeft;
+            isMoving = true;
+        }
+        else
+        {
+            size += 4/global.enemiesLeft;
+            isLeft += 4*64/global.enemiesLeft;
+            isMoving = true;
+        }
+    }
     instance_destroy();
 }
 
+if(x &lt; 0 or x &gt; room_width) hp = 0;
+
+/*
+//Old AI, I thought of using, but looked funny. Fix it if you are using the source.
 if(vine.bbox_left &gt; bbox_right)
 {
     if(!place_meeting(bbox_right+1,y,vine))
@@ -127,6 +147,7 @@ if(vine.bbox_right &lt; bbox_left)
         hspeed = 0;
     }   
 }
+*/
 </string>
           </argument>
         </arguments>
