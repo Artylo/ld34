@@ -33,6 +33,10 @@ image_speed = 0.1;
 //Movement
 mspeed = 1;
 isJump = false;
+isCharge = false;
+isSwing = false;
+canClimb = false;
+isClimb = false;
 </string>
           </argument>
         </arguments>
@@ -71,6 +75,12 @@ else
 }
 
 
+if(isSwing and isJump)
+{
+    image_angle = sword.image_angle;
+}
+else image_angle = 0;
+
 </string>
           </argument>
         </arguments>
@@ -98,6 +108,7 @@ else
 input_left = keyboard_check(vk_left) or keyboard_check(ord('A'));
 input_right = keyboard_check(vk_right) or keyboard_check(ord('D'));
 input_jump = keyboard_check_pressed(vk_up) or keyboard_check_pressed(ord('W'));
+input_swing = mouse_check_button_pressed(mb_left);
 
 isMoving = input_left or input_right;
 </string>
@@ -123,16 +134,20 @@ isMoving = input_left or input_right;
           <argument>
             <kind>1</kind>
             <string>///Collision
-if(!position_meeting(x,bbox_bottom+vspeed,platform))
+if(sprite_index = s_player)
 {
-    gravity = 0.5;
-    
+    if(!position_meeting(x,bbox_bottom+vspeed,platform))
+    {
+        gravity = 0.5;
+        
+    }
+    else
+    {
+        gravity = 0;
+        vspeed = 0;
+    }
 }
-else
-{
-    gravity = 0;
-    vspeed = 0;
-}
+
 </string>
           </argument>
         </arguments>
@@ -155,6 +170,9 @@ else
             <kind>1</kind>
             <string>///Horizontal Movement
 
+if(sprite_index = s_player)
+{
+
 //Normal
 if(input_left)
 {
@@ -163,6 +181,7 @@ if(input_left)
         if(position_meeting(x-sword.swordDist,y,sword))
         {
             hspeed = -mspeed*2;
+            isCharge = true;
             if(position_meeting(x,bbox_bottom+vspeed,platform))
             {
                 repeat(irandom(5))
@@ -174,7 +193,11 @@ if(input_left)
                 }
             }
         }
-        else hspeed = -mspeed;
+        else
+        {
+            hspeed = -mspeed;
+            isCharge = false;
+        }
     }
 }
 
@@ -185,6 +208,7 @@ if(input_right)
         if(position_meeting(x+sword.swordDist,y,sword))
         {
             hspeed = mspeed*2;
+            isCharge = true;
             if(position_meeting(x,bbox_bottom+vspeed,platform))
             {
                 repeat(irandom(5))
@@ -196,7 +220,11 @@ if(input_right)
                 }
             }
         }
-        else hspeed = mspeed;
+        else
+        {
+            hspeed = mspeed;
+            isCharge = false;
+        }
     }
 }
 
@@ -204,6 +232,8 @@ if(input_right)
 
 
 if(!isMoving) hspeed = 0;
+
+}
 </string>
           </argument>
         </arguments>
@@ -226,6 +256,9 @@ if(!isMoving) hspeed = 0;
             <kind>1</kind>
             <string>///Vertical Movement
 
+if(sprite_index = s_player)
+{
+
 if(input_jump)
 {
     if(!isJump)
@@ -241,6 +274,117 @@ if(position_meeting(x,bbox_bottom+vspeed,platform))
         isJump = false;
     }
 }
+
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Swing Sword
+
+if(sprite_index = s_player)
+{
+
+if(input_swing)
+{
+    if(!isSwing)
+    {
+        isSwing = true;
+        sword.isSwing = true;
+        sword.isLeft = 360;
+    }
+}
+
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Climbing
+if(director.level != director.mlevel)
+{
+    if(x &gt; vine.bbox_left and x &lt; vine.bbox_right)
+    {
+        if(input_jump)
+        {
+            generate_level();
+            sprite_index = s_player_climb;
+            speed = 0;
+            image_speed = 0.1;
+            //director.upLeft += view_hview + 16*(director.mlevel-1);
+            director.upLeft += view_hview;
+        }
+        
+    }
+}
+if(sprite_index = s_player_climb)
+{
+    vspeed = -1;
+    if(vine.bbox_bottom &gt; bbox_bottom)
+    {
+        sprite_index = s_player;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//Debug
+draw_set_font(font);
+draw_set_colour(c_white);
+draw_text(16,16,"level: " + string(director.level));
+draw_text(16,32,"mlevel: " + string(director.mlevel));
+draw_text(16,48,"vine: " + string(vine.size));
 </string>
           </argument>
         </arguments>
