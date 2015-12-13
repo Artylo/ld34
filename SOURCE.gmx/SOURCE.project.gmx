@@ -4,7 +4,19 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sound>sound\a_charging</sound>
+    <sound>sound\a_walk</sound>
+    <sound>sound\a_climbing</sound>
+    <sound>sound\a_growing</sound>
+    <sound>sound\a_jump</sound>
+    <sound>sound\a_land</sound>
+    <sound>sound\a_hurt</sound>
+    <sound>sound\a_death</sound>
+    <sound>sound\a_swing</sound>
+    <sound>sound\m_ambient</sound>
+    <sound>sound\m_music</sound>
+  </sounds>
   <sprites name="sprites">
     <sprite>sprites\s_player</sprite>
     <sprite>sprites\s_player_climb</sprite>
@@ -34,8 +46,8 @@
     <object>objects\dust</object>
     <object>objects\vine</object>
     <object>objects\blBeetle</object>
-    <object>objects\goup</object>
     <object>objects\title</object>
+    <object>objects\rainmaker</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room0</room>

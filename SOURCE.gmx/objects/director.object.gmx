@@ -30,6 +30,9 @@ mlevel = 1;
 
 upLeft = 0;
 prevVine = 1;
+
+audio_play_sound(m_ambient,4,true);
+audio_play_sound(m_music,4,true);
 </string>
           </argument>
         </arguments>
@@ -54,13 +57,9 @@ prevVine = 1;
             <kind>1</kind>
             <string>if(vine.size%4 == 0) and (prevVine != vine.size)
 {
-    if(!instance_exists(goup))
+    if(level == mlevel)
     {
-        instance_create(x,y,goup);
-        if(level == mlevel)
-        {
-            mlevel++;
-        }
+        mlevel++;
     }
     prevVine = vine.size;
 }
@@ -86,6 +85,29 @@ instance_activate_region(view_xview,view_yview,view_wview,view_hview,true);
         </arguments>
       </action>
     </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//draw_text(32,32,"mlevle: " + string(mlevel));
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -103,7 +125,7 @@ instance_activate_region(view_xview,view_yview,view_wview,view_hview,true);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//Debug
+            <string>///Draw Stuff
 draw_set_font(font);
 draw_set_colour(c_white);
 draw_set_halign(fa_center);
@@ -118,6 +140,15 @@ var cw = c_white;
 draw_rectangle_colour(rw/2-lw/2-4,rh-28,rw/2+lw/2+4,rh-4,cb,cb,cb,cb,false);
 draw_rectangle_colour(rw/2-lw/2-3,rh-27,rw/2+lw/2+3,rh-5,cw,cw,cw,cw,true);
 draw_text(rw/2,rh-32,level_text);
+
+image_speed = 0.1;
+
+if(vine.size%4 == 0) and (!vine.isMoving) and (level != mlevel)
+{
+    draw_sprite(s_goup,image_index,view_xview+16,view_yview+32);
+    player.canClimb = true;
+}
+else player.canClimb = false;
 
 </string>
           </argument>

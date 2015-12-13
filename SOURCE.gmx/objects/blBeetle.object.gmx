@@ -91,6 +91,7 @@ else
 
 if(hp &lt;= 0)
 {
+    audio_play_sound(a_growing,3,0);
     repeat(irandom_range(30,50))
     {
         with(instance_create(irandom_range(bbox_left,bbox_right),

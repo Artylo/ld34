@@ -24,5 +24,4 @@ for(var i = 0; i < view_wview/32; i ++)
     }
 }
 director.level = director.mlevel;
-with goup instance_destroy();
 

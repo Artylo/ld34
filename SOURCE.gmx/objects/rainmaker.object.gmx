@@ -8,7 +8,7 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="8" enumb="64">
+    <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -25,13 +25,47 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0.1;
-if(vine.size%4 == 0) and (!vine.isMoving)
-{
-    draw_sprite(s_goup,image_index,320,240);
-    player.canClimb = true;
-}
-else player.canClimb = false;
+            <string>///Rain
+rain = part_system_create();
+part_system_depth(rain,-5);
+
+//Shape
+drop = part_type_create();
+part_type_shape(drop,pt_shape_line);
+part_type_orientation(drop,0,0,0,0,1);
+part_type_size(drop,0.2,0.2,0,0);
+part_type_speed(drop,2,4,0.5/room_speed,0);
+part_type_direction(drop,270,270,0,0);
+part_type_life(drop,100,150);
+
+//Make it rain!
+emitter = part_emitter_create(rain);
+part_emitter_region(rain,emitter,view_xview,view_wview,view_yview-1,view_yview-1,ps_shape_line,ps_distr_linear);
+part_emitter_stream(rain,emitter,drop,1);
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>part_emitter_region(rain,emitter,view_xview,view_wview,view_yview-1,view_yview-1,ps_shape_line,ps_distr_linear);
 </string>
           </argument>
         </arguments>

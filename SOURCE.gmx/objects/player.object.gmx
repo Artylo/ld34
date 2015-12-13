@@ -37,6 +37,44 @@ isCharge = false;
 isSwing = false;
 canClimb = false;
 isClimb = false;
+
+//Audio
+alarm[0] = 1; // Walking and Charging
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(hspeed != 0)
+{
+    if(!isJump)
+    {
+        if(isCharge) audio_play_sound(a_charging,1,0);
+        else audio_play_sound(a_walk,1,0);
+    }
+}
+if(vspeed != 0) and (sprite_index == s_player_climb)
+{
+    audio_play_sound(a_climbing,1,0);
+}
+alarm[0] = 10;
 </string>
           </argument>
         </arguments>
@@ -270,6 +308,7 @@ if(input_jump)
 {
     if(!isJump)
     {
+        //audio_play_sound(a_jump,3,0);
         motion_add(90,mspeed*10);
         isJump = true;
     }
@@ -278,6 +317,7 @@ if(position_meeting(x,bbox_bottom+vspeed,platform))
 {
     if(isJump)
     {
+        //audio_play_sound(a_land,3,0);
         isJump = false;
     }
 }
@@ -312,6 +352,7 @@ if(input_swing)
 {
     if(!isSwing)
     {
+        audio_play_sound(a_jump,3,0);
         isSwing = true;
         sword.isSwing = true;
         sword.isLeft = 360;
