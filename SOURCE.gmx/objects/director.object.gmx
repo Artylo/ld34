@@ -33,6 +33,45 @@ prevVine = 1;
 
 audio_play_sound(m_ambient,4,true);
 audio_play_sound(m_music,4,true);
+
+//Speedrun
+speedrun_m = 0;
+speedrun_s = 0;
+speedrun_data_m[0] = 0;
+speedrun_data_s[0] = 0;
+speedrun_splits    = 0;
+alarm[0] = room_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Update Speedrun Timer
+
+if(speedrun_s &lt; 59) speedrun_s++;
+else
+{
+    speedrun_m ++;
+    speedrun_s = 0;
+}
+alarm[0] = room_speed;
 </string>
           </argument>
         </arguments>
@@ -62,6 +101,14 @@ audio_play_sound(m_music,4,true);
         mlevel++;
     }
     prevVine = vine.size;
+    
+    //Speedrun
+    if(mlevel%10==0)
+    {
+        speedrun_data_m[mlevel/10-1] = speedrun_m;
+        speedrun_data_s[mlevel/10-1] = speedrun_s;
+        speedrun_splits++;
+    }
 }
 
 if(upLeft &gt; 0)
@@ -80,29 +127,6 @@ if(!instance_exists(blBeetle))
 
 instance_deactivate_region(view_xview,view_yview,view_wview,view_hview,true,true);
 instance_activate_region(view_xview,view_yview,view_wview,view_hview,true);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="64">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>//draw_text(32,32,"mlevle: " + string(mlevel));
 </string>
           </argument>
         </arguments>
@@ -145,10 +169,68 @@ image_speed = 0.1;
 
 if(vine.size%4 == 0) and (!vine.isMoving) and (level != mlevel)
 {
-    draw_sprite(s_goup,image_index,view_xview+16,view_yview+32);
+    draw_sprite(s_goup,image_index,room_width/2,view_yview+ (room_height/2));
     player.canClimb = true;
 }
 else player.canClimb = false;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Draw Speedrun Timer
+
+var rw = view_xview;
+var rh = view_yview;
+var cb = c_black;
+var cw = c_white;
+
+draw_set_halign(fa_left);
+var speedrun_text = string(speedrun_m) + "m " + string(speedrun_s) + "s ";
+
+//Debug
+/*
+if(keyboard_check_pressed(vk_space))
+{
+    director.mlevel += 9;
+    director.level += 9;
+    if(mlevel%10==0)
+    {
+        speedrun_data_m[mlevel/10-1] = speedrun_m;
+        speedrun_data_s[mlevel/10-1] = speedrun_s;
+        speedrun_splits++;
+    }    
+}
+*/
+//Debug
+
+draw_set_colour(cw);
+draw_text(rw+16,rh,speedrun_text);
+
+for(var i = 0; i &lt; speedrun_splits; i++)
+{
+    var speedrun_split = "Level " + string((i+1)*10) + ": " + string(speedrun_data_m[i]) + "m " + string(speedrun_data_s[i]) + "s ";
+    draw_text_transformed(rw+16,rh+16 + (i+1)*8,speedrun_split,0.5,0.5,0);
+}
+
+
+
 
 </string>
           </argument>
