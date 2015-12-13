@@ -24,9 +24,11 @@
     <sprite>sprites\s_sword</sprite>
     <sprite>sprites\s_dust</sprite>
     <sprite>sprites\s_vine</sprite>
-    <sprite>sprites\s_blBeetle</sprite>
     <sprite>sprites\s_goup</sprite>
     <sprite>sprites\s_title</sprite>
+    <sprite>sprites\s_blBeetle</sprite>
+    <sprite>sprites\s_bug2</sprite>
+    <sprite>sprites\s_bug3</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background</background>
